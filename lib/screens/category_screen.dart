@@ -1,9 +1,9 @@
 import 'dart:math';
-
-import 'package:ecommerce_with_flutter_firebase_and_stripe/main.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/models/category.dart';
+import 'package:swap_tarou/main.dart';
+import 'package:swap_tarou/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:swap_tarou/repositories/category_repository.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -17,6 +17,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   List<int> _extends = [];
 
   final rnd = Random();
+  final categoryRepository =
+      CategoryRepository(apiUrl: 'https://your-api-url.com/api'); // APIのURLを設定
 
   @override
   void initState() {

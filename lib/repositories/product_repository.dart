@@ -1,33 +1,42 @@
-import 'package:db_client/db_client.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../models/product.dart';
 
 class ProductRepository {
-  final DbClient dbClient;
+  final String apiUrl;
 
-  const ProductRepository({required this.dbClient});
+  const ProductRepository({required this.apiUrl});
 
-  Stream<List<Product>> streamProducts(String category) {
-    final productsStream = dbClient.streamAllBy(
-      collection: 'products',
-      field: 'category',
-      value: category,
-    );
+  Stream<List<Product>> streamProducts(String category) async* {
+    final response =
+        await http.get(Uri.parse('$apiUrl/products?category=$category'));
 
-    return productsStream.map((productsData) {
-      return productsData
-          .map((productData) =>
-              Product.fromJson(productData.data, id: productData.id))
+    if (response.statusCode == 200) {
+      final List<dynamic> productsData = json.decode(response.body);
+      yield productsData
+          .map<Product>((productData) => Product.fromJson(productData))
           .toList();
-    });
+    } else {
+      throw Exception('Failed to load products');
+    }
   }
 
   Future<void> createProducts() async {
     try {
       for (var product in products) {
-        await dbClient.add(collection: 'products', data: product);
+        final response = await http.post(
+          Uri.parse('$apiUrl/products'),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(product),
+        );
+
+        if (response.statusCode != 201) {
+          throw Exception('Failed to create product');
+        }
       }
-    } catch (err) {}
+    } catch (err) {
+      throw Exception('Failed to create the products: $err');
+    }
   }
 }
 

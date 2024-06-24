@@ -1,25 +1,24 @@
-import 'package:db_client/db_client.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../models/category.dart';
 
 class CategoryRepository {
-  final DbClient dbClient;
+  final String apiUrl;
 
-  const CategoryRepository({required this.dbClient});
+  const CategoryRepository({required this.apiUrl});
 
   Future<List<Category>> fetchCategories() async {
     try {
-      // final categoriesData = await dbClient.fetchAll(collection: 'categories');
-      final categoriesData = await dbClient.fetchAllFromBundle(
-        collection: 'categories',
-        // TODO: Add your bundle URL here
-        bundleUrl:
-            'https://us-central1-atomsbox-ecomm-27d08.cloudfunctions.net/ext-firestore-bundle-builder-serve',
-      );
-      return categoriesData
-          .map<Category>((categoryData) =>
-              Category.fromJson(categoryData.data, id: categoryData.id))
-          .toList();
+      final response = await http.get(Uri.parse('$apiUrl/categories'));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> categoriesData = json.decode(response.body);
+        return categoriesData
+            .map<Category>((categoryData) => Category.fromJson(categoryData))
+            .toList();
+      } else {
+        throw Exception('Failed to load categories');
+      }
     } catch (err) {
       throw Exception('Failed to fetch the categories: $err');
     }
@@ -28,7 +27,15 @@ class CategoryRepository {
   Future<void> createCategories() async {
     try {
       for (var category in categories) {
-        await dbClient.add(collection: 'categories', data: category);
+        final response = await http.post(
+          Uri.parse('$apiUrl/categories'),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(category),
+        );
+
+        if (response.statusCode != 201) {
+          throw Exception('Failed to create category');
+        }
       }
     } catch (err) {
       throw Exception('Failed to create the categories: $err');

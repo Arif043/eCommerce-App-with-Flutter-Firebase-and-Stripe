@@ -1,10 +1,7 @@
-import 'package:db_client/db_client.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:payment_client/payment_client.dart';
 
-import 'firebase_options.dart';
 import 'models/cart.dart';
 import 'repositories/cart_repository.dart';
 import 'repositories/category_repository.dart';
@@ -14,10 +11,11 @@ import 'screens/catalog_screen.dart';
 import 'screens/category_screen.dart';
 import 'screens/checkout_screen.dart';
 
-final dbClient = DbClient();
 final paymentClient = PaymentClient();
-final categoryRepository = CategoryRepository(dbClient: dbClient);
-final productRepository = ProductRepository(dbClient: dbClient);
+final categoryRepository =
+    CategoryRepository(apiUrl: 'https://your-api-url.com/api'); // APIのURLを設定
+final productRepository =
+    ProductRepository(apiUrl: 'https://your-api-url.com/api'); // APIのURLを設定
 const cartRepository = CartRepository();
 
 const userId = 'user_1234';
@@ -28,13 +26,10 @@ var cart = const Cart(
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 
   // TODO: Add your Stripe publishable key here
   Stripe.publishableKey =
-      'pk_test_51L7cFkBAloH97gpnJnFBulAdxQ5IcE3C2LXUAVAQSe9c0iFh96N3EwndUU4Qdh7D2i20NnlMxevzWYN2iasrRcwJ00Ipz5b6sL';
+      'pk_test_51P6WQ9Li6CKW3pRaWSyUFz55AKm5HskoJfuO3gqbDIejHghtVxSFbDIrQwvtYSSppfXbS35CdSocPaxOLe17aDCQ00uQYaw9Wq';
   await Stripe.instance.applySettings();
   runApp(const MyApp());
 }

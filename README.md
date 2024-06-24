@@ -1,18 +1,22 @@
-# eCommerce App with Flutter, Firebase and Stripe
-The tutorial aims to display you how to build a simple eCommerce App that you can customize for your projects. It is designed using Flutter and Firebase as a backend. In addition, it allows you to easily process payments using Stripe.
-The code in the repository is the starter code for the eCommerce App with Flutter, Firebase and Stripe. It will help you to follow along the video:
-- YouTube video: https://youtu.be/xYgIY_1ulhw
+# Swap_tarou
+
+このチュートリアルは、プロジェクトにカスタマイズできるシンプルなeコマースアプリの作り方を紹介することを目的としています。Flutterを使用して設計され、バックエンドにはFirebaseを使用しています。さらに、Stripeを使用して簡単に支払い処理を行うことができます。
+リポジトリ内のコードは、Flutter、Firebase、およびStripeを使用したeコマースアプリのスターターコードです。ビデオに沿って進めるのに役立ちます。
+
+- YouTube video: <https://youtu.be/xYgIY_1ulhw>
 
 If you're looking for a more complete eCommerce App template:
-- DynaMart: An eCommerce app template: https://www.atomsbox.com/templates/dyna-mart
 
-![Intro](screenshots/ecommerce.png) 
+- DynaMart: An eCommerce app template: <https://www.atomsbox.com/templates/dyna-mart>
 
+![Intro](screenshots/ecommerce.png)
 
 ## Screenshots
-These screenshots represent the final eCommerce App template that is available for purchase at: coming soon 
 
-## App Screenshots: 
+これらのスクリーンショットは、近日発売予定の最終的なeコマースアプリテンプレートを表しています。
+
+## App Screenshots
+
 |![Home](screenshots/ecommerce-home.png) | ![Categories](screenshots/ecommerce-categories.png) | ![Catalog](screenshots/ecommerce-catalog-screen.png) |
 |:---:|:---:|:---:|
 | Home Screen | Categories Screen | Catalog Screen |
@@ -21,50 +25,58 @@ These screenshots represent the final eCommerce App template that is available f
 | ![User Account](screenshots/ecommerce-user-account.png) | ![Register](screenshots/ecommerce-register.png) | ![Login](screenshots/ecommerce-login.png) |
 | User Account Screen | Register Screen | Login Screen|
 
-
-
 ## Getting Started
-The template gives you a starting point for your e-commerce app project. However, before running the app, there are a few  steps you need to take to ensure the app runs smoothly.
+
+このテンプレートは、eコマースアプリプロジェクトの出発点を提供します。しかし、アプリを実行する前に、アプリがスムーズに動作することを確認するためにいくつかのステップを踏む必要があります。
 
 ### Step 1: Firebase Set-Up
-The template uses Firebase for Authentication, database and as well to run serverless backend logic with Cloud Functions.
-1. Create a Firebase Project: Head to the Firebase Console and create a new project https://console.firebase.google.com/
-2. Initialize Firebase Auth and enable the 'Email and Password' provider. 
-3. Initialize a new database with Cloud Firestore
-4. Initialize Firebase in your app: https://firebase.google.com/docs/flutter/setup?platform=ios
+
+このテンプレートは、認証、データベース、およびCloud Functionsを使用したサーバーレスバックエンドロジックの実行にFirebaseを使用します。
+
+1. Firebaseプロジェクトを作成: Firebaseコンソールにアクセスし、新しいプロジェクトを作成します <https://console.firebase.google.com/>
+2. Firebase Authを初期化し、「Email and Password」プロバイダを有効にします。
+3. Cloud Firestoreを使用して新しいデータベースを初期化します。
+4. Initialize Firebase in your app: <https://firebase.google.com/docs/flutter/setup?platform=ios>
 
 ### Step 2: Stripe Set-Up
-The templates uses Stripe to handle all the payment processing needs. To integrate Stripe:
-1. Create an account at stripe.com
-2. Get the Stripe Publishable Key and the Secret Key: https://dashboard.stripe.com/test/apikeys (for test)
-3. Add your Stripe Publishable Key as an environment variable in the .env file
-    - Go in the .example.env, rename it to .env
-    - Add the value of your Publishable Key.
-    - Use the envied library to generate the file 'lib/env.g.dart':
 
-```shell 
+テンプレートは、すべての支払い処理のニーズを処理するためにStripeを使用します。Stripeを統合するには：
+
+1. stripe.comでアカウントを作成します。
+2. Stripeの公開可能キーと秘密キーを取得します：<https://dashboard.stripe.com/test/apikeys（テスト用）>
+3. .envファイルにStripeの公開可能キーを環境変数として追加します。
+    - .example.envに移動し、.envに名前を変更します。
+    - 公開可能キーの値を追加します。
+    - enviedライブラリを使用してファイル 'lib/env.g.dart' を生成します：
+
+```shell
 dart run build_runner build
 ```
 
-4. Go to your Google Cloud Project (it gets created by default as you create a new Firebase project), and register the Stripe secret key with Secret Manager
-    - Go to API & Services, click on "Enable APIs and Services" and enable the Secret Manager API 
-    - Open Secret Manager in your Google Cloud Project
-    - Create a new Secret with name equal to 'STRIPE_SECRET_KEY' and the Secret Key from Stripe as value
+4. Google Cloudプロジェクトに移動します（新しいFirebaseプロジェクトを作成するとデフォルトで作成されます）、そしてSecret ManagerにStripeのシークレットキーを登録します。
+    - API & Servicesに移動し、「Enable APIs and Services」をクリックしてSecret Manager APIを有効にします。
+    - Google CloudプロジェクトでSecret Managerを開きます。
+    - 名前を「STRIPE_SECRET_KEY」とし、値にStripeのシークレットキーを設定して新しいシークレットを作成します。
 
-5. Set up the flutter_stripe library in your project. 
-    - There are platform specific changes to implement: https://pub.dev/packages/flutter_stripe#installation
-    - Watch the video tutorial: https://youtu.be/xYgIY_1ulhw
+5. プロジェクトにflutter_stripeライブラリをセットアップします。
+    - プラットフォーム固有の変更を実装する必要があります: <https://pub.dev/packages/flutter_stripe#installation>
+    - Watch the video tutorial: <https://youtu.be/xYgIY_1ulhw>
 
 ### Step 3: Cloud Functions Set-Up
-The template uses Cloud Functions on Firebase (with Python) to run the backend logic for the payments. 
 
-1. Using the Firebase CLI, run: 
-```shell 
+/*Start of Selection
+このテンプレートは、支払いのバックエンドロジックを実行するためにFirebaseのCloud Functions（Python）を使用します。
+End of Selection*/
+
+1. Using the Firebase CLI, run:
+
+```shell
 firebase init functions 
 ```
-2. Select your Firebase project
-3. Select Python as a language for the functions
-4. Use the script below for your main.py
+
+2. Firebaseプロジェクトを選択します
+3. 関数の言語としてPythonを選択します
+4. 以下のスクリプトをmain.pyに使用します
 
 ```python
 import stripe 
@@ -142,6 +154,7 @@ def _generate_response(intent):
 ```
 
 5. Add Stripe as a dependency to your project
+
 ```shell
 cd functions
 
@@ -160,10 +173,10 @@ deactivate
 ```
 
 6. Deploy the functions to Firebase
+
 ```shell
 firebase deploy --only functions
 ```
-
 
 7. Get the function endpoint URL from Firebase. Use your Cloud Function's URLs in the payment client `packages/payment_client/lib/src/payment_client.dart`
 
@@ -177,11 +190,13 @@ const ENDPOINT_INTENT_ID_URL =
 ```
 
 ### Step 4: Set up the Cloud Firestore Data Bundles
-The eCommerce loads the categories' data using a Data Bundle. The Cloud Firestore data are exported into a static data file using the Firestore Bundle Builder extension. 
 
-1. Install the extension into your Firebase project: https://firebase.google.com/docs/extensions/official/firestore-bundle-builder
-2. Watch the video tutorial: https://youtu.be/xYgIY_1ulhw
-3. Get the function endpoint URL from Firebase. Use the Cloud Function's URLs to retrieve the static file in the categories repository `lib/repositories/category_repository.dart`
+/* Start of Selection
+eCommerceはデータバンドルを使用してカテゴリーデータをロードします。Cloud FirestoreのデータはFirestore Bundle Builder拡張機能を使用して静的データファイルにエクスポートされます。
+
+1. 拡張機能をFirebaseプロジェクトにインストールします: <https://firebase.google.com/docs/extensions/official/firestore-bundle-builder>
+2. ビデオチュートリアルを視聴します: <https://youtu.be/xYgIY_1ulhw>
+3. Firebaseから関数エンドポイントURLを取得します。Cloud FunctionのURLを使用して、カテゴリリポジトリ `lib/repositories/category_repository.dart` で静的ファイルを取得します。
 
 ```dart
 
@@ -201,5 +216,3 @@ The eCommerce loads the categories' data using a Data Bundle. The Cloud Firestor
     }
   }
 ```
-
-
